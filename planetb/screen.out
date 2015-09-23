@@ -1,0 +1,11 @@
+Optimization terminated successfully.
+         Current function value: 0.000000
+         Iterations: 72
+         Function evaluations: 139
+[ 4.45000009  1.49276413 -1.56003305  6.96161281]
+-6.91877479143e-12
+/home/jowen/anaconda/lib/python2.7/site-packages/emcee/ensemble.py:335: RuntimeWarning: invalid value encountered in subtract
+  lnpdiff = (self.dim - 1.) * np.log(zz) + newlnprob - lnprob0
+/home/jowen/anaconda/lib/python2.7/site-packages/emcee/ensemble.py:336: RuntimeWarning: invalid value encountered in greater
+  accept = (lnpdiff > np.log(self._random.rand(len(lnpdiff))))
+ : cannot connect to X server localhost:12.0
