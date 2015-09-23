@@ -74,4 +74,4 @@ def loglike(p):
     if np.isnan(lnlike):
         lnlike = -np.inf
 
-    return -lnlike
+    return lnlike
