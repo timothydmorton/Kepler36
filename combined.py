@@ -251,28 +251,31 @@ def negloglike(p):
     nlnlike=-loglike(p)
     return nlnlike
 
-#from scipy.optimize import fmin
-#pstart=fmin(negloglike, (4.45, 7.75, np.log10(0.02), np.log10(0.1),  -0.333, np.log10(1.01441188e+08)))
-#print pstart
-#print loglike(pstart)
 
-pstart=(4.64, 7.61, -1.688, -0.69, -0.3, 8.0)
+if __name__=='__main__':
 
-print "starting MCMC"
+    #from scipy.optimize import fmin
+    #pstart=fmin(negloglike, (4.45, 7.75, np.log10(0.02), np.log10(0.1),  -0.333, np.log10(1.01441188e+08)))
+    #print pstart
+    #print loglike(pstart)
 
-import emcee
-ndim, nwalkers = 6, 100
-p0 = pstart
-new_p0 = np.array([p0*(1 + np.random.rand(ndim)*.05) for i in range(nwalkers)])
-sampler = emcee.EnsembleSampler(nwalkers, ndim, loglike, threads=28)
-new_pos, prob, state = sampler.run_mcmc(new_p0,100)
-sampler.reset()
-sampler.run_mcmc(new_pos, 1000)
+    pstart=(4.64, 7.61, -1.688, -0.69, -0.3, 8.0)
 
-file1=open('chain_long.pkl','wb')
-pickle.dump(sampler.flatchain,file1)
-file1.close()
+    print "starting MCMC"
 
-file2=open('chain_long2.pkl','wb')
-pickle.dump(sampler,file2)
-file2.close()
+    import emcee
+    ndim, nwalkers = 6, 100
+    p0 = pstart
+    new_p0 = np.array([p0*(1 + np.random.rand(ndim)*.05) for i in range(nwalkers)])
+    sampler = emcee.EnsembleSampler(nwalkers, ndim, loglike, threads=28)
+    new_pos, prob, state = sampler.run_mcmc(new_p0,100)
+    sampler.reset()
+    sampler.run_mcmc(new_pos, 1000)
+
+    file1=open('chain_long.pkl','wb')
+    pickle.dump(sampler.flatchain,file1)
+    file1.close()
+
+    file2=open('chain_long2.pkl','wb')
+    pickle.dump(sampler,file2)
+    file2.close()
