@@ -49,26 +49,32 @@ for i in range(len(a1)):
 
 @jit(nopython=True)
 def linear_interpolate(pt, corners, values):
-    """
-    Does linear interpolation given N-dimensional box surrounding pt
+    """Does linear interpolation given N-dimensional box surrounding pt
 
     Dimension (=N) is defined by length of point
 
     corners is (N x 2) array with the the coordinates of the box corners
+    in form [[x0, x1], [y0, y1], [z0, z1], ...]
 
-    values is (N x 2) array with the corresponding function values
+    values is an array with shape (2, )*N; e.g., for 2-dimensional
+    data, the shape will be (2, 2), for 3-d, (2, 2, 2), etc.  This is
+    constructed such that values[0,0,0] gives the value at x0, y0, z0,
+    etc.
+
     """
     N = len(pt)
 
     if N==1:
         xd = (pt[0] - corners[0,0]) / (corners[0,1] - corners[0,0])
-        return values[0,0]*(1 - xd) + values[0,1]*xd
+        return values[0]*(1 - xd) + values[1]*xd
 
-    new_corners = np.empty((N-1,2), dtype=np.float64)
+    new_corners = np.empty((N-1, 2), dtype=np.float64)
+    new_values = np.empty((2,)*(N-1), dtype=np.float64)
     for i in range(N):
+        xd = (pt[i] - corners[i,0]) / (corners[i,1] - corners[i,0])
         for j in range(2):
-            xd = (pt[i] - corners[i,0]) / (corners[i,1] - corners[i,0])
-            new_corners[i,j] = 
+            new_values[i,j] = values[i,0]*(1 - xd) + values[i,1]*xd
+    
         
 
 @jit(nopython=True)
