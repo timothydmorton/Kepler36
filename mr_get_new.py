@@ -33,12 +33,12 @@ for i in range(0,16):
 initial_mass_b[np.isnan(initial_mass_b)]=0.0
 """
 
-a1 = np.arange(10)*2.
-a2 = np.arange(11)*3.
-a3 = np.arange(12)*4.
-a4 = np.arange(13)*5.
+a1 = np.arange(20)*2.
+a2 = np.arange(21)*3.
+a3 = np.arange(22)*4.
+a4 = np.arange(23)*5.
 
-v = np.zeros((10,11,12,13))
+v = np.zeros((20,21,22,23))
 
 for i in range(len(a1)):
     for j in range(len(a2)):
