@@ -96,7 +96,7 @@ def interp_4d(np.ndarray[DTYPE_t] pt,
     corners[0,1] = arr1[i1+1]
 
     for i in xrange(n2):
-        if arr2[i] > pt[0]:
+        if arr2[i] > pt[1]:
             break
         i2 = i
     if i2 == n2 - 1:
@@ -105,7 +105,7 @@ def interp_4d(np.ndarray[DTYPE_t] pt,
     corners[1,1] = arr2[i2+1]
 
     for i in xrange(n3):
-        if arr3[i] > pt[0]:
+        if arr3[i] > pt[2]:
             break
         i3 = i
     if i3 == n3 - 1:
@@ -114,7 +114,7 @@ def interp_4d(np.ndarray[DTYPE_t] pt,
     corners[2,1] = arr3[i3+1]
 
     for i in xrange(n4):
-        if arr4[i] > pt[0]:
+        if arr4[i] > pt[3]:
             break
         i4 = i
     if i4 == n4 - 1:
@@ -125,7 +125,6 @@ def interp_4d(np.ndarray[DTYPE_t] pt,
               
     cdef np.ndarray[DTYPE_t] box_values = np.empty(16, dtype=float)
     
-    i=0
     cdef int j,k,l,m
     for j in xrange(2):
         for k in xrange(2):
