@@ -56,24 +56,37 @@ def linear_interpolate(pt, corners, values):
     corners is (N x 2) array with the the coordinates of the box corners
     in form [[x0, x1], [y0, y1], [z0, z1], ...]
 
-    values is an array with shape (2, )*N; e.g., for 2-dimensional
-    data, the shape will be (2, 2), for 3-d, (2, 2, 2), etc.  This is
-    constructed such that values[0,0,0] gives the value at x0, y0, z0,
-    etc.
+    values is a 1-D array of length 2*N, with indices interpreted
+    in binary: e.g. for N=2, values = [v00=v(x0,y0), v01=v(x0,x1), 
+                                       v10=v(x1,y1), v11=v(x1,y1)]
+
+    
+    This is implemented recursively; each iteration interpolating out the 
+    first dimension.
 
     """
     N = len(pt)
 
     if N==1:
-        xd = (pt[0] - corners[0,0]) / (corners[0,1] - corners[0,0])
+        xd = (pt[0] - corners[0]) / (corners[1] - corners[0])
         return values[0]*(1 - xd) + values[1]*xd
 
+    #interpolate out the first dimension
+    new_values = np.empty(2**(N-1), dtype=np.float64)
+    x_corners = np.array([corners[0,0], corners[0,1]])
+    jump = 2**(N-1)
+    for i in range(2**(N-1)):
+        new_values[i] = linear_interpolate(np.array([pt[0]]), x_corners, 
+                                           np.array([values[i], values[i+jump]]))
+    
     new_corners = np.empty((N-1, 2), dtype=np.float64)
-    new_values = np.empty((2,)*(N-1), dtype=np.float64)
-    for i in range(N):
-        xd = (pt[i] - corners[i,0]) / (corners[i,1] - corners[i,0])
-        for j in range(2):
-            new_values[i,j] = values[i,0]*(1 - xd) + values[i,1]*xd
+    new_pt = np.empty(N-1, dtype=np.float64)
+    for i in range(N-1):
+        new_corners[i,0] = corners[i+1, 0]
+        new_corners[i,1] = corners[i+1, 1]
+        new_pt = pt[i+1]
+
+    return linear_interpolate(new_pt, new_corners, new_values)
     
         
 
