@@ -64,6 +64,13 @@ def interp_4d(np.ndarray[DTYPE_t] pt,
               np.ndarray[DTYPE_t] arr1, np.ndarray[DTYPE_t] arr2,
               np.ndarray[DTYPE_t] arr3, np.ndarray[DTYPE_t] arr4,
               np.ndarray[DTYPE_t, ndim=4] values):
+    """
+    pt: np.ndarray, length 4
+    arr1, arr2, arr3, arr4: arrays that describe the different dimensions of values
+    values: 4-d array (len(arr1) x len(arr2) x len(arr3) x len(arr4)) of values
+    
+    """
+
 
     #find the boundaries of the bounding box
     cdef np.ndarray[DTYPE_t, ndim=2] corners = np.empty((4,2), dtype=float)
